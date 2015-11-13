@@ -1,9 +1,12 @@
 # See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
 'context-menu':
-  'atom-text-editor': [
-    {
-      'label': 'Appbuilder Simulate'
-      'command': 'appbuilder:simulate'
+  'atom-text-editor': [{
+      'label': 'Appbuilder',
+      'submenu': [{
+          'command': 'appbuilder:simulate',
+          'label': 'Simulate'
+        }
+      ]
     }
   ]
 'menu': [

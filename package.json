@@ -1,6 +1,6 @@
 {
   "name": "Appbuilder",
-  "main": "./lib/package",
+  "main": "./lib/appbuilder",
   "version": "0.0.0",
   "description": "Appbuilder for Atom",
   "keywords": [

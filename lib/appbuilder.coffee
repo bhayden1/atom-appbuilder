@@ -1,13 +1,11 @@
-PackageView = require './package-view'
 {CompositeDisposable} = require 'atom'
-
+{BufferedProcess} = require 'atom'
 module.exports =
   subscriptions: null
 
   activate: (state) ->
     #@packageView = new PackageView(state.packageViewState)
     #@modalPanel = atom.workspace.addModalPanel(item: @packageView.getElement(), visible: false)
-    console.log('activating appbuilder')
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
@@ -18,8 +16,11 @@ module.exports =
     @subscriptions.dispose()
 
   simulate: ->
-    debugger;
     console.log 'simulate!'
-    div = document.createElement('div')
-    div.textContent = 'Hello world!'
-    atom.workspace.addBottomPanel({item: div})
+    #command ='appbuilder';
+    command ='appbuilder'
+    args = ['simulate']
+    stdout = (output) -> console.log(output)
+    exit = (code) -> console.log(code)
+    stderr = (error) -> console.log(error);
+    process = new BufferedProcess({command, args, stdout, exit, stderr})
