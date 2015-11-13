@@ -1,5 +1,7 @@
-# package package
+# Appbuilder Atom package
 
-A short description of your package.
+Package intended to be used with [Telerik's Appbuilder Platform.](http://www.telerik.com/platform#overview)
+Assumes that you've installed the [Appbuilder CLI.](http://www.telerik.com/appbuilder/command-line-interface)
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+Current commands
++ Simulate
