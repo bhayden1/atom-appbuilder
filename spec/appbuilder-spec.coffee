@@ -1,62 +1,28 @@
-Package = require '../lib/package'
+Appbuilder = require '../lib/appbuilder'
+
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 #
 # To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
-describe "Package", ->
-  [workspaceElement, activationPromise] = []
+describe "Appbuilder", ->
+  [workspaceElement, activationPromise, BufferedProcess] = []
 
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
-    activationPromise = atom.packages.activatePackage('package')
+    BufferedProcess = jasmine.createSpy()
+    activationPromise = atom.packages.activatePackage('appbuilder')
+    spyOn(Appbuilder, 'commandDelegate')
 
-  describe "when the package:toggle event is triggered", ->
-    it "hides and shows the modal panel", ->
-      # Before the activation event the view is not on the DOM, and no panel
-      # has been created
-      expect(workspaceElement.querySelector('.package')).not.toExist()
-
+  describe "when the appbuilder:simulate event is triggered", ->
+    it "runs the appbuilder simulater from the command line", ->
       # This is an activation event, triggering it will cause the package to be
       # activated.
-      atom.commands.dispatch workspaceElement, 'package:toggle'
+      atom.commands.dispatch workspaceElement, 'appbuilder:simulate'
 
       waitsForPromise ->
         activationPromise
 
       runs ->
-        expect(workspaceElement.querySelector('.package')).toExist()
-
-        packageElement = workspaceElement.querySelector('.package')
-        expect(packageElement).toExist()
-
-        packagePanel = atom.workspace.panelForItem(packageElement)
-        expect(packagePanel.isVisible()).toBe true
-        atom.commands.dispatch workspaceElement, 'package:toggle'
-        expect(packagePanel.isVisible()).toBe false
-
-    it "hides and shows the view", ->
-      # This test shows you an integration test testing at the view level.
-
-      # Attaching the workspaceElement to the DOM is required to allow the
-      # `toBeVisible()` matchers to work. Anything testing visibility or focus
-      # requires that the workspaceElement is on the DOM. Tests that attach the
-      # workspaceElement to the DOM are generally slower than those off DOM.
-      jasmine.attachToDOM(workspaceElement)
-
-      expect(workspaceElement.querySelector('.package')).not.toExist()
-
-      # This is an activation event, triggering it causes the package to be
-      # activated.
-      atom.commands.dispatch workspaceElement, 'package:toggle'
-
-      waitsForPromise ->
-        activationPromise
-
-      runs ->
-        # Now we can test for view visibility
-        packageElement = workspaceElement.querySelector('.package')
-        expect(packageElement).toBeVisible()
-        atom.commands.dispatch workspaceElement, 'package:toggle'
-        expect(packageElement).not.toBeVisible()
+        expect(Appbuilder.commandDelegate).toHaveBeenCalledWith('appbuilder', ['simulate'])    
